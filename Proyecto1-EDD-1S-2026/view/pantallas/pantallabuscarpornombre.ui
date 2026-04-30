@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PantallaBuscarPorNombre</class>
+ <widget class="QWidget" name="PantallaBuscarPorNombre">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>651</width>
+    <height>671</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>651</width>
+     <height>671</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QWidget" name="widget" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>100</width>
+        <height>80</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>90</height>
+       </size>
+      </property>
+      <widget class="QLabel" name="label">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>181</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Ingrese Nombre:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>20</y>
+         <width>231</width>
+         <height>36</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: white;
+color: black;</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton">
+       <property name="geometry">
+        <rect>
+         <x>470</x>
+         <y>20</y>
+         <width>132</width>
+         <height>36</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Buscar</string>
+       </property>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QWidget" name="widget_2" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>100</width>
+        <height>100</height>
+       </size>
+      </property>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>30</y>
+         <width>111</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Estructura</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_3">
+       <property name="geometry">
+        <rect>
+         <x>290</x>
+         <y>30</y>
+         <width>111</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Tiempo</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_4">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>120</y>
+         <width>101</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Arbol AVL</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblSearchAVL">
+       <property name="geometry">
+        <rect>
+         <x>280</x>
+         <y>120</y>
+         <width>111</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: white;
+color: black;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_6">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>230</y>
+         <width>161</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Lista Ordenada</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblSearchOL">
+       <property name="geometry">
+        <rect>
+         <x>280</x>
+         <y>230</y>
+         <width>111</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: white;
+color:black;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_8">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>330</y>
+         <width>191</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Lista No Ordenada</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblSearchUL">
+       <property name="geometry">
+        <rect>
+         <x>280</x>
+         <y>330</y>
+         <width>111</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: white;
+color:black;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QScrollArea" name="scrollArea">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>419</y>
+         <width>651</width>
+         <height>151</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: white
+</string>
+       </property>
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <widget class="QWidget" name="scrollAreaWidgetContents">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>649</width>
+          <height>149</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QLabel" name="label_10">
+       <property name="geometry">
+        <rect>
+         <x>260</x>
+         <y>380</y>
+         <width>101</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Producto</string>
+       </property>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PantallaSistema</class>
+ <widget class="QWidget" name="PantallaSistema">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1900</width>
+    <height>1050</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1900</width>
+    <height>1010</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Supermercado el Bosque</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QFrame" name="header">
+     <property name="minimumSize">
+      <size>
+       <width>1920</width>
+       <height>80</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>1920</width>
+       <height>80</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+     <widget class="QLabel" name="tituloHeader">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>20</y>
+        <width>491</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Supermercado el Bosque</string>
+      </property>
+     </widget>
+     <widget class="QLCDNumber" name="lcdNumber">
+      <property name="geometry">
+       <rect>
+        <x>790</x>
+        <y>20</y>
+        <width>201</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="digitCount">
+       <number>8</number>
+      </property>
+      <property name="mode">
+       <enum>QLCDNumber::Mode::Bin</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblFecha">
+      <property name="geometry">
+       <rect>
+        <x>1100</x>
+        <y>20</y>
+        <width>421</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Fecha</string>
+      </property>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="panelContenido">
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+     <widget class="QPushButton" name="btnCargarArchivo">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>10</y>
+        <width>132</width>
+        <height>36</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Cargar A</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnVerArbol">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>10</y>
+        <width>132</width>
+        <height>36</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Ver Ar</string>
+      </property>
+     </widget>
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>80</y>
+        <width>1171</width>
+        <height>681</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:white;</string>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOn</enum>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>-2671</y>
+         <width>1155</width>
+         <height>3350</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>3350</height>
+        </size>
+       </property>
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>1121</width>
+          <height>3196</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="minimumSize">
+            <size>
+             <width>320</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>420</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">Background-color:black;
+color:white;
+font-size: 45px;</string>
+           </property>
+           <property name="text">
+            <string>Lista No Ordenada</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblTiempoUL">
+           <property name="styleSheet">
+            <string notr="true">Background-color:black;
+color:white;
+font-size: 45px;</string>
+           </property>
+           <property name="text">
+            <string>Tiempo:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="CustomGraphics" name="gvListaEnlazadaNoOrdenada">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>500</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="styleSheet">
+            <string notr="true">Background-color:black;
+color:white;
+font-size: 45px;</string>
+           </property>
+           <property name="text">
+            <string>Lista Ordenada</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblTiempoOL">
+           <property name="styleSheet">
+            <string notr="true">Background-color:black;
+color:white;
+font-size: 45px;</string>
+           </property>
+           <property name="text">
+            <string>Tiempo:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="CustomGraphics" name="gvListaEnlazadaOrdenada">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>500</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="styleSheet">
+            <string notr="true">Background-color:black;
+color:white;
+font-size: 45px;</string>
+           </property>
+           <property name="text">
+            <string>Arbol B</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblTiempoB">
+           <property name="styleSheet">
+            <string notr="true">Background-color:black;
+color:white;
+font-size: 45px;</string>
+           </property>
+           <property name="text">
+            <string>Tiempo:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="CustomGraphics" name="gvArbolB">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>500</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="styleSheet">
+            <string notr="true">Background-color:black;
+color:white;
+font-size: 45px;</string>
+           </property>
+           <property name="text">
+            <string>Arbol B+</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblTiempoBPlus">
+           <property name="styleSheet">
+            <string notr="true">Background-color:black;
+color:white;
+font-size: 45px;</string>
+           </property>
+           <property name="text">
+            <string>Tiempo:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="CustomGraphics" name="gvArbolBPlus">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>500</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_5">
+           <property name="styleSheet">
+            <string notr="true">Background-color:black;
+color:white;
+font-size: 45px;</string>
+           </property>
+           <property name="text">
+            <string>Arbol AVL</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lblTiempoAVL">
+           <property name="styleSheet">
+            <string notr="true">Background-color:black;
+color:white;
+font-size: 45px;</string>
+           </property>
+           <property name="text">
+            <string>Tiempo:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="CustomGraphics" name="gvArbolAVL">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>500</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <property name="geometry">
+       <rect>
+        <x>19</x>
+        <y>79</y>
+        <width>651</width>
+        <height>671</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>651</width>
+        <height>671</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>651</width>
+        <height>671</height>
+       </size>
+      </property>
+      <property name="currentIndex">
+       <number>-1</number>
+      </property>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="panelAcciones">
+     <property name="minimumSize">
+      <size>
+       <width>1920</width>
+       <height>160</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>160</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+     <widget class="QPushButton" name="btnAgregar">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>30</y>
+        <width>101</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Agregar</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnEliminar">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>30</y>
+        <width>91</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Eliminar</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnBuscarPorNombre">
+      <property name="geometry">
+       <rect>
+        <x>480</x>
+        <y>30</y>
+        <width>132</width>
+        <height>36</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Buscar por Nombre</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnBuscarPorCodigo">
+      <property name="geometry">
+       <rect>
+        <x>720</x>
+        <y>30</y>
+        <width>132</width>
+        <height>36</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>buscar por codigo de barra</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnBuscarPorCategoria">
+      <property name="geometry">
+       <rect>
+        <x>960</x>
+        <y>30</y>
+        <width>132</width>
+        <height>36</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Buscar por Categoria</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnBuscarPorCaducidad">
+      <property name="geometry">
+       <rect>
+        <x>1200</x>
+        <y>30</y>
+        <width>132</width>
+        <height>36</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Buscar por Caducidad</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnListarPorNombre">
+      <property name="geometry">
+       <rect>
+        <x>1440</x>
+        <y>30</y>
+        <width>132</width>
+        <height>36</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Listar por Nombre</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnCompararBusquedas">
+      <property name="geometry">
+       <rect>
+        <x>1680</x>
+        <y>30</y>
+        <width>132</width>
+        <height>36</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Comparar Busquedas</string>
+      </property>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CustomGraphics</class>
+   <extends>QGraphicsView</extends>
+   <header location="global">customgraphics.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
