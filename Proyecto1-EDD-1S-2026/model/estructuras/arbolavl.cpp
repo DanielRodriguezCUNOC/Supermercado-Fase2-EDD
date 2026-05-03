@@ -149,43 +149,26 @@ NodoAVL* ArbolAVL::eliminarRec(NodoAVL* root, const std::string& barcode) {
         return root;
 
     // Como el árbol está ordenado por nombre, buscar el código de barras significa
-    // que tenemos que revisar todas las ramas posibles en un "escáner completo"
-    if (root->producto.getBarcode() != barcode) {
-        NodoAVL* res = nullptr;
-        // Revisamos de lado izquierdo
-        if ((res = eliminarRec(root->izq, barcode)) != root->izq) {
-            root->izq = res;
-        } 
-        // Si no estaba, revisamos de lado derecho
-        else if ((res = eliminarRec(root->der, barcode)) != root->der) {
-            root->der = res;
-        } else {
-            return root; // No lo encontramos en todo el árbol
-        }
-    } else {
-        // Encontramos al que queremos borrar
-        
-        // Si no tiene hijos o tiene solo uno
-        if ((root->izq == nullptr) || (root->der == nullptr)) {
-            // Agarramos al único hijo o nos quedamos con nada
-            NodoAVL* temp = root->izq ? root->izq : root->der;
-            
-            // Si no tenía nada, lo quitamos
-            if (temp == nullptr) {
+    // que tenemos que revisar todas las ramas posibles
+    if(barcode < root->producto.getBarcode()) root->izq = eliminarRec(root->izq, barcode);
+    else if (barcode > root->producto.getBarcode()) root->der = eliminarRec(root->der, barcode);
+    else{
+        // Si el nodo tiene uno o ningun hijo
+        if((root->izq == nullptr) || (root->der == nullptr )){
+            NodoAVL *temp = root->izq ? root->izq : root->der;
+            if(temp == nullptr){
                 temp = root;
                 root = nullptr;
-            } else {
-                *root = *temp; // Copiamos la info del hijo asumiendo su lugar
-            }
+            }else *root = *temp;
             delete temp;
-        } else {
-            // Si el nodo tiene sus dos hijos, le robamos la info al nodo más chico del lado derecho
-            // y luego mandamos a borrar ese nodo robado (que es más fácil porque está en una orilla)
-            NodoAVL* temp = nodoValorMinimo(root->der);
+        }else{
+            // Nodo con dos hijos. Se obtiene el sucesor usando el metodo in-order
+            NodoAVL *temp = nodoValorMinimo(root->der);
             root->producto = temp->producto;
             root->der = eliminarRec(root->der, temp->producto.getBarcode());
         }
     }
+
 
     // Si borramos el último nodo, ya terminamos
     if (root == nullptr)
@@ -194,21 +177,25 @@ NodoAVL* ArbolAVL::eliminarRec(NodoAVL* root, const std::string& barcode) {
     // Después de borrar toca actualizar la altura
     root->altura = 1 + max(obtenerAltura(root->izq), obtenerAltura(root->der));
 
-    // Revisamos que tanta diferencia hay entre izquierda y derecha
+
+    // Hacemos el rebalanceo
     int balance = obtenerBalance(root);
 
-    // Casos de desbalanceo (mismos que al agregar)
+    // Caso Izquierda-Izquierda
     if (balance > 1 && obtenerBalance(root->izq) >= 0)
         return rotacionDerecha(root);
 
+    // Caso Izquierda-Derecha
     if (balance > 1 && obtenerBalance(root->izq) < 0) {
         root->izq = rotacionIzquierda(root->izq);
         return rotacionDerecha(root);
     }
 
+    // Caso Derecha-Derecha
     if (balance < -1 && obtenerBalance(root->der) <= 0)
         return rotacionIzquierda(root);
 
+    //Caso Derecha-Izquierda
     if (balance < -1 && obtenerBalance(root->der) > 0) {
         root->der = rotacionDerecha(root->der);
         return rotacionIzquierda(root);

@@ -132,7 +132,7 @@ BPlusNode* ArbolBPlus::insertarRec(BPlusNode *nodo, const Product &producto, std
         while (i < nodo->numClaves && cat >= nodo->claves[i]) i++;
 
         std::string subClaveProm;
-        // Bajada RECURSIVA: Mandamos al hijo a hacer el trabajo sucio
+        // Bajada RECURSIVA
         BPlusNode *nuevoHijo = insertarRec(nodo->hijos[i], producto, subClaveProm, error, exito);
 
         // Si nuevoHijo no es null, significa que abajo hubo una explosión (split)
@@ -157,13 +157,14 @@ BPlusNode* ArbolBPlus::insertarRec(BPlusNode *nodo, const Product &producto, std
                 
                 // Repartimos los hijos y claves de la derecha al nuevo nodo
                 int idx = 0;
-                for (int k = mitad + 1; k < nodo->numClaves; k++) {
+                int k = mitad + 1;
+                for (; k < nodo->numClaves; k++) {
                     nuevoDer->claves[idx] = nodo->claves[k];
                     nuevoDer->hijos[idx] = nodo->hijos[k];
                     idx++;
                     nuevoDer->numClaves++;
                 }
-                nuevoDer->hijos[idx] = nodo->hijos[nodo->numClaves]; // último hijo
+                nuevoDer->hijos[idx] = nodo->hijos[k]; // último hijo derecho
                 nodo->numClaves = mitad; // Reducimos nuestro propio tamaño
                 
                 return nuevoDer; // Retornamos el hermano al padre
@@ -256,10 +257,8 @@ void ArbolBPlus::buscarPorCategoriaLista(const std::string &categoria, ListaGene
 
 bool ArbolBPlus::eliminarProducto(const std::string &codigoBarra, std::string &errorRollback)
 {
-    if (!raiz) {
-        errorRollback = "Oye, pero si el árbol está vacío :(";
-        return false;
-    }
+    if (!raiz) return false;
+
 
     // Como nuestra brújula es la categoría, pero solo sabemos el código de barras, 
     // tenemos que usar modo "escáner" en todas las hojas. 
@@ -272,34 +271,38 @@ bool ArbolBPlus::eliminarProducto(const std::string &codigoBarra, std::string &e
     while (hoja && !encontrado) {
         for (int i = 0; i < hoja->numClaves; ++i) {
             Nodo *actual = hoja->productos[i];
+            Nodo *anterior = nullptr;
             while (actual) {
                 if (actual->getValue()->getBarcode() == codigoBarra) {
+
                     // Lo sacamos de la lista doblemente enlazada
-                    if (actual->getPrev()) actual->getPrev()->setNext(actual->getNext());
+                    if(anterior) anterior->setNext(actual->getNext());
                     else hoja->productos[i] = actual->getNext();
 
-                    if (actual->getNext()) actual->getNext()->setPrev(actual->getPrev());
+                    if (actual->getNext()) actual->getNext()->setPrev(anterior);
 
-                    delete actual->getValue(); // Limpiamos la basura del producto
+                    delete actual->getValue();
                     delete actual;             
                     encontrado = true;
-                    
-                    // Ojo: Si la categoría queda totalmente vacía de productos, no le hacemos un "delete" de clave, 
-                    // simplemente se queda ahí como pasillo vacío (lazy delete), para no complicar el rebalanceo de grado B+.
+
+                    // Si la lista de la categoria qeudo vacia, se elimina la clave
+                    if(hoja->productos[i]==nullptr){
+                        for(int j=i; j < hoja->numClaves - 1; j++){
+                            hoja->claves[j] = hoja->claves[j+1];
+                            hoja->productos[j] = hoja->productos[j+1];
+                        }
+                        hoja->numClaves--;
+                    }
                     break;
                 }
+                anterior = actual;
                 actual = actual->getNext();
             }
             if(encontrado) break;
         }
         hoja = hoja->siguienteHoja; // Nos movemos hacia la derecha
     }
-
-    if (!encontrado) {
-        errorRollback = "Ese producto es un fantasma, no lo encontré.";
-        return false;
-    }
-    return true;
+    return encontrado;
 }
 
 std::string ArbolBPlus::exportarCSV() const
