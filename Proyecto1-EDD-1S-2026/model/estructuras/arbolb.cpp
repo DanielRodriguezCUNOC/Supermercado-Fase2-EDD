@@ -71,13 +71,10 @@ void NodoB::eliminar(const std::string &codigo)
     // La clave no está en este nodo, debemos buscarla en los descendientes
     else
     {
-        if (hoja)
-        {
-            // El elemento no existe en la estructura; se retorna sin acción.
-            return;
-        }
+         // El elemento no existe en la estructura; se retorna sin acción.
+        if (hoja) return;
 
-        bool flag = (idx == n); // Indica si bajaremos por el último hijo
+        bool esUltimoHijo = (idx == n); // Indica si bajaremos por el último hijo
 
         // Si el hijo donde descenderemos tiene menos de 't' claves, debemos garantizar que posea al menos 't'
         // claves mediante un préstamo o una fusión antes de descender.
@@ -85,7 +82,7 @@ void NodoB::eliminar(const std::string &codigo)
             llenar(idx);
 
         // Descenso recursivo
-        if (flag && idx > n)
+        if (esUltimoHijo && idx > n)
             hijos[idx - 1]->eliminar(codigo);
         else
             hijos[idx]->eliminar(codigo);
@@ -395,9 +392,10 @@ void ArbolB::eliminarPorCodigo(const std::string &codigo)
             raiz = nullptr;
         else
             raiz = raiz->hijos[0];
-        delete[] tmp->claves;
-        delete[] tmp->hijos;
-        ::operator delete(tmp);
+
+        tmp -> n = 0;
+        for (int i = 0; i < 2*t; ++i) tmp -> hijos[i] = nullptr;
+        delete tmp;
     }
 }
 
