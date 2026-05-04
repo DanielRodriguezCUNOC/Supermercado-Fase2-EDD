@@ -43,6 +43,7 @@ public slots:
     QGraphicsView *getViewArbolBPlus();
     QGraphicsView *getViewArbolAVL();
     QGraphicsView *getViewHashTable();
+    QGraphicsView *getViewGrafo();
 
 private:
     void conectarPantallasConController();
@@ -65,6 +66,9 @@ private:
 signals:
     void addProducto();
     void archivoCSVSeleccionado(const QString &ruta);
+    void sucursalesCSVSeleccionado(const QString &ruta);
+    void conexionesCSVSeleccionado(const QString &ruta);
+    void catalogoCSVSeleccionado(const QString &ruta);
 };
 
 #endif // PANTALLASISTEMA_H

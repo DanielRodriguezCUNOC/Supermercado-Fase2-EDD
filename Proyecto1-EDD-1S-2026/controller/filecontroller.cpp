@@ -1,4 +1,5 @@
 #include "filecontroller.h"
+#include "estructurascontroller.h"
 #include <QFile>
 #include <QTextStream>
 #include <QDateTime>
@@ -117,4 +118,94 @@ QList<Product> FileController::cargarCSV(const QString &ruta)
 
     file.close();
     return listaProductos;
+}
+
+void FileController::cargarSucursales(const QString &ruta, EstructurasController* ec) {
+    if (!ec) return;
+    QFile file(ruta);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        logError("No se pudo abrir sucursales: " + ruta);
+        return;
+    }
+    QTextStream in(&file);
+    bool header = true;
+    while (!in.atEnd()) {
+        QString line = in.readLine().trimmed();
+        if (line.isEmpty()) continue;
+        if (header) { 
+            header = false; 
+            if (line.contains("ID", Qt::CaseInsensitive)) continue; 
+        }
+        QStringList t = line.split(',');
+        if (t.size() < 6) continue;
+        // Limpiar comillas
+        for (int i=0; i<t.size(); ++i) {
+            t[i] = t[i].trimmed();
+            if(t[i].startsWith('"')) t[i].remove(0,1);
+            if(t[i].endsWith('"')) t[i].chop(1);
+        }
+        ec->agregarSucursal(t[0].toStdString(), t[1].toStdString(), t[2].toStdString(), 
+                           t[3].toInt(), t[4].toInt(), t[5].toInt());
+    }
+    file.close();
+}
+
+void FileController::cargarConexiones(const QString &ruta, EstructurasController* ec) {
+    if (!ec) return;
+    QFile file(ruta);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        logError("No se pudo abrir conexiones: " + ruta);
+        return;
+    }
+    QTextStream in(&file);
+    bool header = true;
+    while (!in.atEnd()) {
+        QString line = in.readLine().trimmed();
+        if (line.isEmpty()) continue;
+        if (header) { 
+            header = false; 
+            if (line.contains("OrigenID", Qt::CaseInsensitive)) continue; 
+        }
+        QStringList t = line.split(',');
+        if (t.size() < 4) continue;
+        for (int i=0; i<t.size(); ++i) {
+            t[i] = t[i].trimmed();
+            if(t[i].startsWith('"')) t[i].remove(0,1);
+            if(t[i].endsWith('"')) t[i].chop(1);
+        }
+        ec->conectarSucursales(t[0].toStdString(), t[1].toStdString(), t[2].toInt(), t[3].toInt());
+    }
+    file.close();
+}
+
+void FileController::cargarCatalogo(const QString &ruta, EstructurasController* ec) {
+    if (!ec) return;
+    QFile file(ruta);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        logError("No se pudo abrir catalogo: " + ruta);
+        return;
+    }
+    QTextStream in(&file);
+    bool header = true;
+    while (!in.atEnd()) {
+        QString line = in.readLine().trimmed();
+        if (line.isEmpty()) continue;
+        if (header) { 
+            header = false; 
+            if (line.contains("SucursalID", Qt::CaseInsensitive)) continue; 
+        }
+        QStringList t = line.split(',');
+        if (t.size() < 8) continue;
+        for (int i=0; i<t.size(); ++i) {
+            t[i] = t[i].trimmed();
+            if(t[i].startsWith('"')) t[i].remove(0,1);
+            if(t[i].endsWith('"')) t[i].chop(1);
+        }
+        
+        // SucursalID, Nombre, CodigoBarra, Categoria, Fecha, Marca, Precio, Stock
+        ec->agregarProductoASucursal(t[0].toStdString(), t[1].toStdString(), t[2].toStdString(), 
+                                   t[3].toStdString(), t[4].toStdString(), t[5].toStdString(), 
+                                   t[6].toDouble(), t[7].toInt());
+    }
+    file.close();
 }

@@ -14,7 +14,9 @@ public:
     FileController(QObject *parent = nullptr);
     ~FileController();
 
-    // Método principal para cargar CSV
+    void cargarSucursales(const QString &ruta, class EstructurasController* ec);
+    void cargarConexiones(const QString &ruta, class EstructurasController* ec);
+    void cargarCatalogo(const QString &ruta, class EstructurasController* ec);
     QList<Product> cargarCSV(const QString &ruta);
 
 private:

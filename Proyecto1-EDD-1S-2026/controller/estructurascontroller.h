@@ -7,6 +7,7 @@
 #include "estructuras/listaenlazadanoordenada.h"
 #include "estructuras/listaenlazadaordenada.h"
 #include "estructuras/tablahash.h"
+#include "estructuras/grafo.h"
 class EstructurasController : public QObject
 {
     Q_OBJECT
@@ -17,6 +18,7 @@ private:
     ArbolBPlus *arbolBPlus;
     ArbolAVL *arbolAVL;
     TablaHash *hashTable;
+    Grafo *grafo;
     long acumuladoUL = 0;
     long acumuladoOL = 0;
     long acumuladoB = 0;
@@ -40,6 +42,7 @@ public:
     ArbolBPlus* getArbolBPlus() const { return arbolBPlus; }
     ArbolAVL* getArbolAVL() const { return arbolAVL; }
     TablaHash* getHashTable() const { return hashTable; }
+    Grafo* getGrafo() const { return grafo; }
 
 public slots:
     void agregarProducto(std::string name,
@@ -59,6 +62,11 @@ public slots:
     ListaGenerica<Product*>* buscarPorRangoCaducidad(const std::string& inicio, const std::string& fin, long& tiempo);
     Product* buscarPorCodigo(const std::string& barcode, long& tiempo);
     void listarPorNombre(ListaGenerica<Product*>* resultados);
+
+    // Grafo & Sucursales
+    void agregarSucursal(std::string id, std::string nombre, std::string ubicacion, int ti, int tt, int td);
+    void conectarSucursales(std::string idOrig, std::string idDest, int tiempo, int costo);
+    void agregarProductoASucursal(std::string sucursalID, std::string name, std::string barcode, std::string category, std::string expiry, std::string brand, double price, int stock);
 signals:
     void etructurasActualizadas();
     void tiemposCalculados(long ul, long ol, long b, long bp, long avl, long hash);

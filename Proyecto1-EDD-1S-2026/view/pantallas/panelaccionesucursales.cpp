@@ -7,6 +7,7 @@ PanelAccioneSucursales::PanelAccioneSucursales(QWidget *parent)
     , ui(new Ui::PanelAccioneSucursales)
 {
     ui->setupUi(this);
+    connect(ui->btnCargarSucursales, &QPushButton::clicked, this, &PanelAccioneSucursales::cargarSucursalesRequested);
 
     this->setStyleSheet(R"(
 

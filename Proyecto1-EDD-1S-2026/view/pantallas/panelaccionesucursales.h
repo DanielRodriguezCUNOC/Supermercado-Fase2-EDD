@@ -18,6 +18,7 @@ public:
 signals:
     void modifySucursalRequested();
     void eliminarSucursalRequested();
+    void cargarSucursalesRequested();
 
 private:
     Ui::PanelAccioneSucursales *ui;
