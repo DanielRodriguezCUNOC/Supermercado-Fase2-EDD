@@ -19,11 +19,13 @@ AppController::AppController(QObject *parent) : QObject(parent)
         estructurasController->getArbolB(),
         estructurasController->getArbolBPlus(),
         estructurasController->getArbolAVL(),
+        estructurasController->getHashTable(),
         vistaSistema->getViewListaNoOrdenada(),
         vistaSistema->getViewListaOrdenada(),
         vistaSistema->getViewArbolB(),
         vistaSistema->getViewArbolBPlus(),
-        vistaSistema->getViewArbolAVL());
+        vistaSistema->getViewArbolAVL(),
+        vistaSistema->getViewHashTable());
 
     connect(vistaSistema, &PantallaSistema::archivoCSVSeleccionado,
             this, &AppController::cargarArchivoCSV);
@@ -133,4 +135,11 @@ void AppController::listarPorNombre()
     ListaGenerica<Product*>* resultados = new ListaGenerica<Product*>();
     estructurasController->listarPorNombre(resultados);
     emit resultadosListadoNombre(resultados);
+}
+
+void AppController::buscarPorCodigo(const QString& barcode)
+{
+    long tiempo = 0;
+    Product* p = estructurasController->buscarPorCodigo(barcode.toStdString(), tiempo);
+    emit resultadosBusquedaCodigo(p, tiempo);
 }

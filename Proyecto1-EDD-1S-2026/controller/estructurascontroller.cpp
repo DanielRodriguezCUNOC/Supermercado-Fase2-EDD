@@ -10,6 +10,7 @@ EstructurasController::EstructurasController()
   arbolB = new ArbolB(5);         // t = 5 (Grado 10)
   arbolBPlus = new ArbolBPlus(4); // Grado = 4 
   arbolAVL = new ArbolAVL();
+  hashTable = new TablaHash();
 }
 
 EstructurasController::EstructurasController(
@@ -17,12 +18,14 @@ EstructurasController::EstructurasController(
     ListaEnlazadaOrdenada *listaOrdenada,
     ArbolB *arbolB,
     ArbolBPlus *arbolBPlus,
-    ArbolAVL *arbolAVL)
+    ArbolAVL *arbolAVL,
+    TablaHash *hashTable)
     : unorderedList(unorderedList),
       listaOrdenada(listaOrdenada),
       arbolB(arbolB),
       arbolBPlus(arbolBPlus),
-      arbolAVL(arbolAVL)
+      arbolAVL(arbolAVL),
+      hashTable(hashTable)
 {
 }
 
@@ -39,7 +42,7 @@ void EstructurasController::agregarProducto(std::string name,
 
   qDebug() << "--- Midiendo tiempos de inserción para:" << QString::fromStdString(name) << "---";
 
-  long tUL = 0, tOL = 0, tAVL = 0, tB = 0, tBP = 0;
+  long tUL = 0, tOL = 0, tAVL = 0, tB = 0, tBP = 0, tHash = 0;
 
   // Lista No Ordenada
   if (unorderedList)
@@ -102,7 +105,7 @@ void EstructurasController::agregarProducto(std::string name,
   qDebug() << "---------------------------------------------------------";
 
   if (emitirSenal) {
-      emit tiemposCalculados(tUL, tOL, tB, tBP, tAVL);
+      emit tiemposCalculados(tUL, tOL, tB, tBP, tAVL, tHash);
       emit etructurasActualizadas();
     } else {
       acumuladoUL += tUL;
@@ -110,6 +113,7 @@ void EstructurasController::agregarProducto(std::string name,
       acumuladoB += tB;
       acumuladoBPlus += tBP;
       acumuladoAVL += tAVL;
+      acumuladoHash += tHash;
   }
 }
 
@@ -125,11 +129,12 @@ void EstructurasController::actualizarVistas()
     acumuladoB = 0;
     acumuladoBPlus = 0;
     acumuladoAVL = 0;
+    acumuladoHash = 0;
   }
 
   void EstructurasController::emitirTiemposAcumulados()
   {
-    emit tiemposCalculados(acumuladoUL, acumuladoOL, acumuladoB, acumuladoBPlus, acumuladoAVL);
+    emit tiemposCalculados(acumuladoUL, acumuladoOL, acumuladoB, acumuladoBPlus, acumuladoAVL, acumuladoHash);
   }
 
 void EstructurasController::eliminarProducto(std::string barcode)
@@ -189,9 +194,19 @@ void EstructurasController::eliminarProducto(std::string barcode)
     }
   }
 
+  long tHash = 0;
+  if (hashTable)
+  {
+    auto start = std::chrono::high_resolution_clock::now();
+    hashTable->eliminar(barcode);
+    auto end = std::chrono::high_resolution_clock::now();
+    tHash = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+    qDebug() << "[Tabla Hash]:" << tHash << "µs";
+  }
+
   qDebug() << "---------------------------------------------------------";
 
-  emit tiemposCalculados(tUL, tOL, tB, tBP, tAVL);
+  emit tiemposCalculados(tUL, tOL, tB, tBP, tAVL, tHash);
   emit etructurasActualizadas();
 }
 
@@ -265,6 +280,19 @@ ListaGenerica<Product*>* EstructurasController::buscarPorRangoCaducidad(const st
     }
 
     return resultados;
+}
+
+Product* EstructurasController::buscarPorCodigo(const std::string& barcode, long& tiempo)
+{
+    tiempo = 0;
+    if (hashTable) {
+        auto start = std::chrono::high_resolution_clock::now();
+        Product* p = hashTable->buscar(barcode);
+        auto end = std::chrono::high_resolution_clock::now();
+        tiempo = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+        return p;
+    }
+    return nullptr;
 }
 
 void EstructurasController::listarPorNombre(ListaGenerica<Product*>* resultados)

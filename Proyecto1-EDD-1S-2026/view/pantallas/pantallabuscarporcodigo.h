@@ -15,6 +15,12 @@ public:
     explicit PantallaBuscarPorCodigo(QWidget *parent = nullptr);
     ~PantallaBuscarPorCodigo();
 
+public slots:
+    void mostrarResultado(class Product* p);
+
+signals:
+    void buscarRequested(const QString& barcode);
+
 private:
     Ui::PantallaBuscarPorCodigo *ui;
 };

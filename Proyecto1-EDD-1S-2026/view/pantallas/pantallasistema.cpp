@@ -401,11 +401,10 @@ void PantallaSistema::conectarPantallasConController()
         connect(appController, &AppController::resultadosBusquedaNombre,
                 buscarNombre, &PantallaBuscarPorNombre::mostrarResultados,
                 Qt::UniqueConnection);
-        // Connect name search times to system labels
         connect(appController, &AppController::resultadosBusquedaNombre,
                 [this](ListaGenerica<Product *> *r, long ul, long ol, long avl)
                 {
-                    this->actualizarTiempos(ul, ol, -1, -1, avl);
+                    this->actualizarTiempos(ul, ol, -1, -1, avl, -1);
                 });
     }
 
@@ -417,11 +416,10 @@ void PantallaSistema::conectarPantallasConController()
         connect(appController, &AppController::resultadosBusquedaCategoria,
                 buscarCategoria, &PantallaBuscarPorCategoria::mostrarResultados,
                 Qt::UniqueConnection);
-        // Connect category search time (B+)
         connect(appController, &AppController::resultadosBusquedaCategoria,
                 [this](ListaGenerica<Product *> *r, long t)
                 {
-                    this->actualizarTiempos(-1, -1, -1, t, -1);
+                    this->actualizarTiempos(-1, -1, -1, t, -1, -1);
                 });
     }
 
@@ -433,11 +431,10 @@ void PantallaSistema::conectarPantallasConController()
         connect(appController, &AppController::resultadosBusquedaRango,
                 buscarRango, &PantallaBuscarPorRangoCaducidad::mostrarResultados,
                 Qt::UniqueConnection);
-        // Connect range search time (B)
         connect(appController, &AppController::resultadosBusquedaRango,
                 [this](ListaGenerica<Product *> *r, long t)
                 {
-                    this->actualizarTiempos(-1, -1, t, -1, -1);
+                    this->actualizarTiempos(-1, -1, t, -1, -1, -1);
                 });
     }
 
@@ -450,6 +447,21 @@ void PantallaSistema::conectarPantallasConController()
         connect(appController, &AppController::resultadosListadoNombre,
                 listarNombre, &PantallaListarPorNombre::mostrarResultados,
                 Qt::UniqueConnection);
+    }
+
+    if (appController && buscarPorCodigo)
+    {
+        connect(buscarPorCodigo, &PantallaBuscarPorCodigo::buscarRequested,
+                appController, &AppController::buscarPorCodigo,
+                Qt::UniqueConnection);
+        connect(appController, &AppController::resultadosBusquedaCodigo,
+                buscarPorCodigo, &PantallaBuscarPorCodigo::mostrarResultado,
+                Qt::UniqueConnection);
+        connect(appController, &AppController::resultadosBusquedaCodigo,
+                [this](Product *p, long t)
+                {
+                    this->actualizarTiempos(-1, -1, -1, -1, -1, t);
+                });
     }
 }
 
@@ -485,11 +497,14 @@ QGraphicsView *PantallaSistema::getViewArbolAVL()
 {
 
     return ui ? ui->gvArbolAVL : nullptr;
-    // Si da clavos descomentar esta línea y comentar la de arriba, es un parche temporal para evitar que se caiga la aplicación al no tener implementada la vista del AVL
-    // return nullptr;
 }
 
-void PantallaSistema::actualizarTiempos(long ul, long ol, long b, long bp, long avl)
+QGraphicsView *PantallaSistema::getViewHashTable()
+{
+    return ui ? ui->gvTablaHash : nullptr;
+}
+
+void PantallaSistema::actualizarTiempos(long ul, long ol, long b, long bp, long avl, long hash)
 {
     if (!ui)
         return;
@@ -503,4 +518,6 @@ void PantallaSistema::actualizarTiempos(long ul, long ol, long b, long bp, long 
         ui->lblTiempoBPlus->setText(QString("Tiempo: %1 µs").arg(bp));
     if (avl != -1)
         ui->lblTiempoAVL->setText(QString("Tiempo: %1 µs").arg(avl));
+    if (hash != -1)
+        ui->lblTiempoHash->setText(QString("Tiempo: %1 µs").arg(hash));
 }
