@@ -11,6 +11,7 @@ EstructurasController::EstructurasController()
   arbolBPlus = new ArbolBPlus(4); // Grado = 4 
   arbolAVL = new ArbolAVL();
   hashTable = new TablaHash();
+  grafo = new Grafo();
 }
 
 EstructurasController::EstructurasController(
@@ -27,6 +28,7 @@ EstructurasController::EstructurasController(
       arbolAVL(arbolAVL),
       hashTable(hashTable)
 {
+  grafo = new Grafo();
 }
 
 void EstructurasController::agregarProducto(std::string name,
@@ -299,5 +301,40 @@ void EstructurasController::listarPorNombre(ListaGenerica<Product*>* resultados)
 {
     if (arbolAVL && resultados) {
         arbolAVL->obtenerTodoEnOrden(resultados);
+    }
+}
+
+void EstructurasController::agregarSucursal(std::string id, std::string nombre, std::string ubicacion, int ti, int tt, int td) {
+    if (grafo) {
+        grafo->agregarSucursal(new Sucursal(id, nombre, ubicacion, ti, tt, td));
+    }
+}
+
+void EstructurasController::conectarSucursales(std::string idOrig, std::string idDest, int tiempo, int costo) {
+    if (grafo) {
+        grafo->conectar(idOrig, idDest, tiempo, costo);
+    }
+}
+
+void EstructurasController::agregarProductoASucursal(std::string sucursalID, std::string name, std::string barcode, std::string category, std::string expiry, std::string brand, double price, int stock) {
+    if (!grafo) return;
+    
+    Sucursal* s = grafo->buscarSucursal(sucursalID);
+    if (s) {
+        Product* p = new Product(name, barcode, category, expiry, brand, price, stock);
+        
+        // 1. Inventario LOCAL
+        s->inventario->insertar(p);
+        
+        // 2. Indexación Global
+        if (hashTable) hashTable->insertar(new Product(*p));
+        if (arbolAVL) arbolAVL->insertar(*p);
+        if (arbolB) arbolB->insertar(*p);
+        std::string err;
+        if (arbolBPlus) arbolBPlus->insertarProducto(*p, err);
+        if (unorderedList) unorderedList->insertar(new Product(*p));
+        if (listaOrdenada) listaOrdenada->insertar(new Product(*p));
+        
+        emit etructurasActualizadas();
     }
 }

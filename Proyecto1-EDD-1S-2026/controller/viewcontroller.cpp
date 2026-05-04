@@ -12,12 +12,13 @@
 #include "../model/estructuras/arbolbplus.h"
 #include "../model/estructuras/arbolavl.h"
 #include "../model/estructuras/tablahash.h"
+#include "../model/estructuras/grafo.h"
 
-ViewController::ViewController(ListaEnlazadaNoOrdenada *l1, ListaEnlazadaOrdenada *l2, ArbolB *b, ArbolBPlus *bp, ArbolAVL *a, TablaHash *th,
+ViewController::ViewController(ListaEnlazadaNoOrdenada *l1, ListaEnlazadaOrdenada *l2, ArbolB *b, ArbolBPlus *bp, ArbolAVL *a, TablaHash *th, Grafo* g,
                                QGraphicsView *vl1, QGraphicsView *vl2,
-                               QGraphicsView *vb, QGraphicsView *vbp, QGraphicsView *va, QGraphicsView *vth)
-    : listNoOrd(l1), listOrd(l2), btree(b), bplustree(bp), avl(a), hashtable(th),
-      viewListaNoOrd(vl1), viewListaOrd(vl2), viewArbolB(vb), viewArbolBPlus(vbp), viewArbolAVL(va), viewHashTable(vth)
+                               QGraphicsView *vb, QGraphicsView *vbp, QGraphicsView *va, QGraphicsView *vth, QGraphicsView *vg)
+    : listNoOrd(l1), listOrd(l2), btree(b), bplustree(bp), avl(a), hashtable(th), grafo(g),
+      viewListaNoOrd(vl1), viewListaOrd(vl2), viewArbolB(vb), viewArbolBPlus(vbp), viewArbolAVL(va), viewHashTable(vth), viewGrafo(vg)
 {
 }
 
@@ -94,6 +95,12 @@ void ViewController::mostrarTablaHash(QGraphicsView *view)
         renderizarYMostrar(hashtable->generarDOT(), "tabla_hash", view);
 }
 
+void ViewController::mostrarGrafo(QGraphicsView *view)
+{
+    if (grafo)
+        renderizarYMostrar(grafo->generarDOT(), "grafo_sucursales", view);
+}
+
 void ViewController::actualizarVista()
 {
     if (viewListaNoOrd)
@@ -108,6 +115,8 @@ void ViewController::actualizarVista()
         mostrarArbolAVL(viewArbolAVL);
     if (viewHashTable)
         mostrarTablaHash(viewHashTable);
+    if (viewGrafo)
+        mostrarGrafo(viewGrafo);
 }
 
 void ViewController::productoAgregado() {}

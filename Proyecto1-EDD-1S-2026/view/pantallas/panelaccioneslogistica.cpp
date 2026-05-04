@@ -6,6 +6,7 @@ PanelAccionesLogistica::PanelAccionesLogistica(QWidget *parent)
     : QWidget(parent), ui(new Ui::PanelAccionesLogistica)
 {
     ui->setupUi(this);
+    connect(ui->btnCargarConexiones, &QPushButton::clicked, this, &PanelAccionesLogistica::cargarConexionesRequested);
 
     this->setStyleSheet(R"(
 QPushButton {

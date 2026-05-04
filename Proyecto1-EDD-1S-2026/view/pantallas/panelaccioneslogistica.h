@@ -15,6 +15,9 @@ public:
     explicit PanelAccionesLogistica(QWidget *parent = nullptr);
     ~PanelAccionesLogistica();
 
+signals:
+    void cargarConexionesRequested();
+
 private:
     Ui::PanelAccionesLogistica *ui;
 };

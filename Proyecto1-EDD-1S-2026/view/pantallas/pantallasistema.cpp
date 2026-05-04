@@ -99,7 +99,7 @@ QPushButton#btnAccionesLogistica:pressed { background-color: #B85C0E; }
 
         if (QPushButton *btnCargar = this->findChild<QPushButton *>("btnCargarArchivo"))
         {
-            btnCargar->setText("Cargar Archivo");
+            btnCargar->setText("Cargar Catálogo");
             btnCargar->setGeometry(30, 10, 190, 40);
             btnCargar->setStyleSheet(R"(
 QPushButton {
@@ -115,6 +115,10 @@ QPushButton {
 QPushButton:hover { background-color: #F78B17; }
 QPushButton:pressed { background-color: #E67C0B; }
 )");
+        }
+
+        if (QPushButton *btnVer = this->findChild<QPushButton *>("btnVerArbol")) {
+            btnVer->setGeometry(250, 10, 132, 36);
         }
     }
 
@@ -330,19 +334,14 @@ void PantallaSistema::inicializarPantallas()
     }
 
     connect(ui->btnCargarArchivo, &QPushButton::clicked, [=]()
-            {
-        const QString ruta = QFileDialog::getOpenFileName(
-            this,
-            "Seleccionar archivo CSV",
-            QString(),
-            "Archivos CSV (*.csv);;Todos los archivos (*)");
-
-        if (ruta.isEmpty()) {
-            return;
+    {
+        const QString ruta = QFileDialog::getOpenFileName(this, "Seleccionar Catálogo CSV", "", "Archivos CSV (*.csv)");
+        if (!ruta.isEmpty()) {
+            ui->stackedWidget->setCurrentWidget(mostrarCSV);
+            emit catalogoCSVSeleccionado(ruta);
         }
+    });
 
-        ui->stackedWidget->setCurrentWidget(mostrarCSV);
-        emit archivoCSVSeleccionado(ruta); });
 
     auto findBtnLocal2 = [this](const QString &name)
     {
@@ -463,6 +462,26 @@ void PantallaSistema::conectarPantallasConController()
                     this->actualizarTiempos(-1, -1, -1, -1, -1, t);
                 });
     }
+
+    if (appController) {
+        connect(this, &PantallaSistema::sucursalesCSVSeleccionado, appController, &AppController::cargarSucursalesCsv, Qt::UniqueConnection);
+        connect(this, &PantallaSistema::conexionesCSVSeleccionado, appController, &AppController::cargarConexionesCsv, Qt::UniqueConnection);
+        connect(this, &PantallaSistema::catalogoCSVSeleccionado, appController, &AppController::cargarCatalogoCsv, Qt::UniqueConnection);
+
+        // Connections from Panels to trigger system signals
+        if (panelAccionesSucursales) {
+            connect(panelAccionesSucursales, &PanelAccioneSucursales::cargarSucursalesRequested, [this](){
+                const QString ruta = QFileDialog::getOpenFileName(this, "Seleccionar Sucursales CSV", "", "Archivos CSV (*.csv)");
+                if (!ruta.isEmpty()) emit sucursalesCSVSeleccionado(ruta);
+            });
+        }
+        if (panelAccionesLogistica) {
+            connect(panelAccionesLogistica, &PanelAccionesLogistica::cargarConexionesRequested, [this](){
+                const QString ruta = QFileDialog::getOpenFileName(this, "Seleccionar Conexiones CSV", "", "Archivos CSV (*.csv)");
+                if (!ruta.isEmpty()) emit conexionesCSVSeleccionado(ruta);
+            });
+        }
+    }
 }
 
 void PantallaSistema::mostrarDatosCSV(const QList<Product> &productos)
@@ -502,6 +521,11 @@ QGraphicsView *PantallaSistema::getViewArbolAVL()
 QGraphicsView *PantallaSistema::getViewHashTable()
 {
     return ui ? ui->gvTablaHash : nullptr;
+}
+
+QGraphicsView *PantallaSistema::getViewGrafo()
+{
+    return ui ? ui->gvGrafo : nullptr;
 }
 
 void PantallaSistema::actualizarTiempos(long ul, long ol, long b, long bp, long avl, long hash)
