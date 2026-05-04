@@ -35,6 +35,12 @@ qt_add_executable(Proyecto1-EDD-1S-2026
      view/pantallas/pantallabuscarporcategoria.h view/pantallas/pantallabuscarporcategoria.cpp view/pantallas/pantallabuscarporcategoria.ui
      view/pantallas/pantallabuscarporrangocaducidad.h view/pantallas/pantallabuscarporrangocaducidad.cpp view/pantallas/pantallabuscarporrangocaducidad.ui
      view/pantallas/pantallalistarpornombre.h view/pantallas/pantallalistarpornombre.cpp view/pantallas/pantallalistarpornombre.ui
+     view/pantallas/panelaccionesgenerales.h view/pantallas/panelaccionesgenerales.cpp view/pantallas/panelaccionesgenerales.ui
+     view/pantallas/panelaccionesucursales.h view/pantallas/panelaccionesucursales.cpp view/pantallas/panelaccionesucursales.ui
+     view/pantallas/panelaccioneslogistica.h view/pantallas/panelaccioneslogistica.cpp view/pantallas/panelaccioneslogistica.ui
+     view/pantallas/pantallabuscarporcodigo.h view/pantallas/pantallabuscarporcodigo.cpp view/pantallas/pantallabuscarporcodigo.ui
+     view/pantallas/pantallaeliminarsucursal.h view/pantallas/pantallaeliminarsucursal.cpp view/pantallas/pantallaeliminarsucursal.ui
+    view/pantallas/pantallamodificarsucursal.h view/pantallas/pantallamodificarsucursal.cpp view/pantallas/pantallamodificarsucursal.ui
 
 
 )

@@ -5,6 +5,9 @@
 #include <QGraphicsScene>
 #include <QList>
 #include "model/entidades/product.h"
+#include "view/pantallas/pantallabuscarporcodigo.h"
+#include "view/pantallas/pantallamodificarsucursal.h"
+#include "view/pantallas/pantallaeliminarsucursal.h"
 
 namespace Ui
 {
@@ -26,19 +29,19 @@ public:
     void mostrarArboles();
     void btnAgregarClicked();
     void inicializarPantallas();
-    void mostrarDatosCSV(const QList<Product>& productos);
+    void mostrarDatosCSV(const QList<Product> &productos);
 
     void setAppController(AppController *controller);
-    
+
 public slots:
     void actualizarTiempos(long ul, long ol, long b, long bp, long avl);
 
     // Getters para acceder a las QGraphicsViews desde ViewController
-    QGraphicsView* getViewListaNoOrdenada();
-    QGraphicsView* getViewListaOrdenada();
-    QGraphicsView* getViewArbolB();
-    QGraphicsView* getViewArbolBPlus();
-    QGraphicsView* getViewArbolAVL();
+    QGraphicsView *getViewListaNoOrdenada();
+    QGraphicsView *getViewListaOrdenada();
+    QGraphicsView *getViewArbolB();
+    QGraphicsView *getViewArbolBPlus();
+    QGraphicsView *getViewArbolAVL();
 
 private:
     void conectarPantallasConController();
@@ -50,7 +53,13 @@ private:
     QGraphicsScene *scene4;
     AppController *appController = nullptr;
     PantallaAgregarProducto *agregarProducto = nullptr;
+    PantallaBuscarPorCodigo *buscarPorCodigo = nullptr;
+    PantallaModificarSucursal *modificarSucursal = nullptr;
+    PantallaEliminarSucursal *eliminarSucursal = nullptr;
     PantallaMostrarCSV *mostrarCSV = nullptr;
+    class PanelAccionesGenerales *panelAccionesGenerales = nullptr;
+    class PanelAccioneSucursales *panelAccionesSucursales = nullptr;
+    class PanelAccionesLogistica *panelAccionesLogistica = nullptr;
 
 signals:
     void addProducto();
