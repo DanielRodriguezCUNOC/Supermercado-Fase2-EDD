@@ -34,7 +34,7 @@ public:
     void setAppController(AppController *controller);
 
 public slots:
-    void actualizarTiempos(long ul, long ol, long b, long bp, long avl);
+    void actualizarTiempos(long ul, long ol, long b, long bp, long avl, long hash);
 
     // Getters para acceder a las QGraphicsViews desde ViewController
     QGraphicsView *getViewListaNoOrdenada();
@@ -42,6 +42,7 @@ public slots:
     QGraphicsView *getViewArbolB();
     QGraphicsView *getViewArbolBPlus();
     QGraphicsView *getViewArbolAVL();
+    QGraphicsView *getViewHashTable();
 
 private:
     void conectarPantallasConController();
